@@ -33,12 +33,20 @@ P.Va0 = 15;         % initial airspeed (also used as trim airspeed)
 P.Va_trim = 15; 
 P.Va = P.Va_trim;
 
-
 P.gravity = 9.81;
 P.g = 9.81; 
 
 % Aerosonde UAV Data
 % physical parameters of airframe
+properties.mass           = 9.1     % kg
+properties.I_x            = 0.8244  % kg*m^2
+properties.I_y            = 1.135   % kg*m^2
+properties.I_z            = 1.759   % kg*m^2
+properties.I_xz           = 0.1204  % kg*m^2
+properties.wing_span      = 2.8956  % m
+properties.chord_length   = 0.18994 % m
+properties.wing_area      = 0.55    % m^2
+properties.prop_disk_area = 0.2027  % m^2
 
 % aerodynamic coefficients
 

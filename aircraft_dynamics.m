@@ -260,15 +260,15 @@ function Derivatives(block)
 P = block.DialogPrm(1).Data; % must duplicate this line in each function
 
 % compute inertial constants
-K = ;
-k1 = ;
-k2 = ;
-k3 = ;
-k4 = ;
-k5 = ;
-k6 = ;
-k7 = ;
-k8 = ;
+K  = properties.I_x * properties.I_z - properties.I_xz^2;
+k1 = properties.I_xz * (properties.inertiaI_x - properties.I_y + properties.I_z) / K;
+k2 = (properties.I_z * (properties.I_z - properties.I_y) + properties.I_xz^2) / K;
+k3 = properties.I_z / K;
+k4 = properties.I_xz / K;
+k5 = (properties.I_z - properties.I_x) / properties.I_y;
+k6 = properties.I_xz / properties.I_y;
+k7 = ((properties.I_x - properties.I_y) * properties.I_x + properties.I_xz^2) / K;
+k8 = properties.I_x / K;
 
 % map states and inputs
 pn    = block.ContStates.Data(1);
