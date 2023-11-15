@@ -49,6 +49,22 @@ properties.wing_area      = 0.55    % m^2
 properties.prop_disk_area = 0.2027  % m^2
 
 % aerodynamic coefficients
+properties.efficiency_factor = 0.9  % Oswald efficiency factor
+
+properties.C_L_0 =  0.28
+properties.C_L_a =  3.45
+properties.C_L_q =  0
+properties.C_L_e = -0.36
+
+properties.C_D_0 =  0.03
+properties.C_D_a =  0.3
+properties.C_D_q =  0
+properties.C_D_e =  0
+
+properties.C_m_0 = -0.02338
+properties.C_m_a = -0.38
+properties.C_m_q = -3.6
+properties.C_m_e = -0.5
 
 % Control Input limits 
 P.delta_e_max = deg2rad(45); % assumed symmetric

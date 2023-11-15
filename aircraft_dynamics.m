@@ -314,6 +314,20 @@ R(3, 3) = c1 * c2;
 
 % Aerodynamic Coefficients 
 % compute the nondimensional aerodynamic coefficients here
+C_L = properties.C_L_0;
+C_L = C_L + properties.C_L_a * alpha;
+C_L = C_L + properties.C_L_q * properties.chord_length / 2 / Va * q;
+C_L = C_L + properties.C_L_e * delta_e;
+
+C_D = properties.C_D_0;
+C_D = C_D + properties.C_D_a * alpha;
+C_D = C_D + properties.C_D_q * properties.chord_length / 2 / Va * q;
+C_D = C_D + properties.C_D_e * delta_e;
+
+C_m = properties.C_m_0;
+C_m = C_m + properties.C_m_a * alpha;
+C_m = C_m + properties.C_m_q * properties.chord_length / 2 / Va * q;
+C_m = C_m + properties.C_m_e * delta_e;
 
 % aerodynamic forces and moments
 % compute the aerodynamic forces and moments here
