@@ -277,9 +277,9 @@ pd    = block.ContStates.Data(3);
 u     = block.ContStates.Data(4);
 v     = block.ContStates.Data(5);
 w     = block.ContStates.Data(6);
-phi   = block.ContStates.Data(7);
-theta = block.ContStates.Data(8);
-psi   = block.ContStates.Data(9);
+phi   = block.ContStates.Data(7);  % 1 - roll
+theta = block.ContStates.Data(8);  % 2 - pitch
+psi   = block.ContStates.Data(9);  % 3 - heading (yaw)
 p     = block.ContStates.Data(10);
 q     = block.ContStates.Data(11);
 r     = block.ContStates.Data(12);
@@ -294,6 +294,23 @@ alpha = ;
 beta = ;
 
 % rotation matrix
+s1 = sin(phi);
+c1 = cos(phi);
+s2 = sin(theta);
+c2 = cos(theta);
+s3 = sin(psi);
+c3 = cos(psi);
+
+R = zeros(3, 3);
+R(1, 1) = c2 * c3;
+R(1, 2) = s1 * s2 * c3 - c1 * s3;
+R(1, 3) = c1 * s2 * c3 + s1 * s3;
+R(2, 1) = c2 * s3;
+R(2, 2) = s1 * s2 * s3 + c1 * c3;
+R(2, 3) = c1 * s2 * s3 - s1 * c3;
+R(3, 1) = -s2;
+R(3, 2) = s1 * c2;
+R(3, 3) = c1 * c2;
 
 % Aerodynamic Coefficients 
 % compute the nondimensional aerodynamic coefficients here
