@@ -51,20 +51,41 @@ properties.prop_disk_area = 0.2027  % m^2
 % aerodynamic coefficients
 properties.efficiency_factor = 0.9  % Oswald efficiency factor
 
-properties.C_L_0 =  0.28
-properties.C_L_a =  3.45
-properties.C_L_q =  0
-properties.C_L_e = -0.36
+properties.C_L_0  =  0.28
+properties.C_L_a  =  3.45
+properties.C_L_q  =  0
+properties.C_L_de = -0.36
 
-properties.C_D_0 =  0.03
-properties.C_D_a =  0.3
-properties.C_D_q =  0
-properties.C_D_e =  0
+properties.C_D_0  =  0.03
+properties.C_D_a  =  0.3
+properties.C_D_q  =  0
+properties.C_D_de =  0
 
-properties.C_m_0 = -0.02338
-properties.C_m_a = -0.38
-properties.C_m_q = -3.6
-properties.C_m_e = -0.5
+properties.C_m_0  = -0.02338
+properties.C_m_a  = -0.38
+properties.C_m_q  = -3.6
+properties.C_m_de = -0.5
+
+properties.C_Y_0  =  0
+properties.C_Y_b  = -0.98
+properties.C_Y_p  =  0
+properties.C_Y_r  =  0
+properties.C_Y_da =  0
+properties.C_Y_dr = -0.17
+
+properties.C_l_0  =  0
+properties.C_l_b  = -0.12
+properties.C_l_p  = -0.26
+properties.C_l_r  =  0.14
+properties.C_l_da =  0.08
+properties.C_l_dr =  0.105
+
+properties.C_n_0  =  0
+properties.C_n_b  =  0.25
+properties.C_n_p  =  0.022
+properties.C_n_r  = -0.35
+properties.C_n_da =  0.06
+properties.C_n_dr = -0.032
 
 % Control Input limits 
 P.delta_e_max = deg2rad(45); % assumed symmetric

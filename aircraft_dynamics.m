@@ -314,20 +314,44 @@ R(3, 3) = c1 * c2;
 
 % Aerodynamic Coefficients 
 % compute the nondimensional aerodynamic coefficients here
+scale_x = properties.chord_length / 2 / Va;
+scale_y = properties.wing_span / 2 / Va;
+
 C_L = properties.C_L_0;
 C_L = C_L + properties.C_L_a * alpha;
-C_L = C_L + properties.C_L_q * properties.chord_length / 2 / Va * q;
-C_L = C_L + properties.C_L_e * delta_e;
+C_L = C_L + properties.C_L_q * scale_x * q;
+C_L = C_L + properties.C_L_de * delta_e;
 
 C_D = properties.C_D_0;
 C_D = C_D + properties.C_D_a * alpha;
-C_D = C_D + properties.C_D_q * properties.chord_length / 2 / Va * q;
-C_D = C_D + properties.C_D_e * delta_e;
+C_D = C_D + properties.C_D_q * scale_x * q;
+C_D = C_D + properties.C_D_de * delta_e;
 
 C_m = properties.C_m_0;
 C_m = C_m + properties.C_m_a * alpha;
-C_m = C_m + properties.C_m_q * properties.chord_length / 2 / Va * q;
-C_m = C_m + properties.C_m_e * delta_e;
+C_m = C_m + properties.C_m_q * scale_x * q;
+C_m = C_m + properties.C_m_de * delta_e;
+
+C_Y = properties.C_Y_0;
+C_Y = C_Y + properties.C_Y_b * beta;
+C_Y = C_Y + properties.C_Y_p * scale_y * p;
+C_Y = C_Y + properties.C_Y_r * scale_y * r;
+C_Y = C_Y + properties.C_Y_da * delta_a;
+C_Y = C_Y + properties.C_Y_dr * delta_r;
+
+C_l = properties.C_Y_0;
+C_l = C_l + properties.C_l_b * beta;
+C_l = C_l + properties.C_l_p * scale_y * p;
+C_l = C_l + properties.C_l_r * scale_y * r;
+C_l = C_l + properties.C_l_da * delta_a;
+C_l = C_l + properties.C_l_dr * delta_r;
+
+C_n = properties.C_Y_0;
+C_n = C_n + properties.C_n_b * beta;
+C_n = C_n + properties.C_n_p * scale_y * p;
+C_n = C_n + properties.C_n_r * scale_y * r;
+C_n = C_n + properties.C_n_da * delta_a;
+C_n = C_n + properties.C_n_dr * delta_r;
 
 % aerodynamic forces and moments
 % compute the aerodynamic forces and moments here
