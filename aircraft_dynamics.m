@@ -355,12 +355,23 @@ C_n = C_n + properties.C_n_dr * delta_r;
 
 % aerodynamic forces and moments
 % compute the aerodynamic forces and moments here
+dynamic_pressure = 0.5 * P.air_density * Va^2;
+dynamic_force = dynamic_pressure * properties.wing_area;
+dynamic_moment = dynamic_force * properties.wing_span;
+
+F_L = C_L * dynamic_force;
+F_D = C_D * dynamic_force;
+F_Y = C_Y * dynamic_force;
+m   = C_m * dynamic_moment;
+l   = C_l * dynamic_moment;
+n   = C_n * dynamic_moment;
 
 % propulsion forces and moments
 % compute the propulsion forces and moments here
 
 % gravity
 % compute the gravitational forces here
+F_G = P.g * properties.mass;
 
 % total forces and moments (body frame)
 

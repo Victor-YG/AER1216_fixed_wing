@@ -35,6 +35,7 @@ P.Va = P.Va_trim;
 
 P.gravity = 9.81;
 P.g = 9.81; 
+P.air_density = 1.225;
 
 % Aerosonde UAV Data
 % physical parameters of airframe
