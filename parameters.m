@@ -48,6 +48,8 @@ properties.wing_span      = 2.8956  % m
 properties.chord_length   = 0.18994 % m
 properties.wing_area      = 0.55    % m^2
 properties.prop_disk_area = 0.2027  % m^2
+properties.fuel_cap = 4.0  % kg (DK 20231116)
+properties.omegaMax = 12500  % RPM (DK 20231116)
 
 % aerodynamic coefficients
 properties.efficiency_factor = 0.9  % Oswald efficiency factor
