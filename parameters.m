@@ -44,12 +44,18 @@ properties.I_x            = 0.8244  % kg*m^2
 properties.I_y            = 1.135   % kg*m^2
 properties.I_z            = 1.759   % kg*m^2
 properties.I_xz           = 0.1204  % kg*m^2
+
 properties.wing_span      = 2.8956  % m
 properties.chord_length   = 0.18994 % m
 properties.wing_area      = 0.55    % m^2
+
+properties.prop_radius    = 0.254   % m
+properties.prop_diameter  = 0.508   % m (20 inch prop)
 properties.prop_disk_area = 0.2027  % m^2
-properties.fuel_cap = 4.0  % kg (DK 20231116)
-properties.omegaMax = 12500  % RPM (DK 20231116)
+properties.prop_max_rpm   = 12500   % rpm
+
+properties.fuel_cap       = 4.0     % kg  (DK 20231116)
+properties.omegaMax       = 12500   % RPM (DK 20231116)
 
 % aerodynamic coefficients
 properties.efficiency_factor = 0.9  % Oswald efficiency factor

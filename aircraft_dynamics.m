@@ -286,12 +286,12 @@ r     = block.ContStates.Data(12);
 delta_e = block.InputPort(1).Data(1)*pi/180 ; % converted inputs to radians
 delta_a = block.InputPort(1).Data(2)*pi/180 ; % converted inputs to radians
 delta_r = block.InputPort(1).Data(3)*pi/180 ; % converted inputs to radians
-delta_t = block.InputPort(1).Data(4);
+delta_t = block.InputPort(1).Data(4);         % assume between 0 and 1
 
-% Air Data 
-Va = ;
-alpha = ;
-beta = ;
+% Air Data
+Va = sqrt(u^2 + v^2 + w^2);
+alpha = atan2(w, u);
+beta = atan2(v, sqrt(u^2 + w^2));
 
 % rotation matrix
 s1 = sin(phi);
@@ -368,6 +368,14 @@ n   = C_n * dynamic_moment;
 
 % propulsion forces and moments
 % compute the propulsion forces and moments here
+rho = properties.air_density; % TODO::replace with the air density at current altitude
+angular_velocity = delta_t * properties.prop_max_rpm * 2 * pi / 60;
+
+advance_ratio = pi * Va / angular_velocity / properties.prop_radius;
+C_T_J = binary_search(J, CT, advance_ratio);
+C_Q_J = binary_search(J, CQ, advance_ratio);
+T_prop = C_T_J * advance_ratio;
+Q_prop = C_Q_J * advance_ratio;
 
 % gravity
 % compute the gravitational forces here
