@@ -355,20 +355,20 @@ C_n = C_n + properties.C_n_dr * delta_r;
 
 % aerodynamic forces and moments
 % compute the aerodynamic forces and moments here
-dynamic_pressure = 0.5 * P.air_density * Va^2;
+rho = P.air_density; % TODO::replace with the air density at current altitude
+dynamic_pressure = 0.5 * rho * Va^2;
 dynamic_force = dynamic_pressure * properties.wing_area;
 dynamic_moment = dynamic_force * properties.wing_span;
 
 F_L = C_L * dynamic_force;
 F_D = C_D * dynamic_force;
 F_Y = C_Y * dynamic_force;
-m   = C_m * dynamic_moment;
-l   = C_l * dynamic_moment;
-n   = C_n * dynamic_moment;
+M   = C_m * dynamic_moment;
+L   = C_l * dynamic_moment;
+N   = C_n * dynamic_moment;
 
 % propulsion forces and moments
 % compute the propulsion forces and moments here
-rho = properties.air_density; % TODO::replace with the air density at current altitude
 angular_velocity = delta_t * properties.prop_max_rpm * 2 * pi / 60;
 
 advance_ratio = pi * Va / angular_velocity / properties.prop_radius;
@@ -382,25 +382,30 @@ Q_prop = C_Q_J * advance_ratio;
 F_G = P.g * properties.mass;
 
 % total forces and moments (body frame)
+X_sum = T_prop - F_G * s2 - F_D * cos(alpha) + F_L * sin(alpha);
+Y_sum = F_G * s1 * c2 - F_Y;
+Z_sum = F_G * c1 * c2 + F_D * sin(alpha) - F_L * cos(alpha);
+M_sum = M - Q_prop; % assuming properller turning counterclockwise
+L_sum = L;
+N_sum = N;
 
 % state derivatives
 % the full aircraft dynamics model is computed here
-pdot = ;
-pndot = ;
-pedot = ;
-pddot = ;
+pndot = u * c2 * c3 + v * (s1 * s2 * c3 - c1 * s3) + w * (c1 * s2 * c3 + s1 * s3);
+pedot = u * c2 * s3 + v * (s1 * s2 * s3 - c1 * c3) + w * (c1 * s2 * s3 - s1 * c3);
+pddot = u * (-s2) + v * s1 * c2 + w * c1 * c2;
 
-udot = ;
-vdot = ;
-wdot = ;
+udot = X_sum / properties.mass + r * v - q * w;
+vdot = Y_sum / properties.mass + p * w - r * u;
+wdot = Z_sum / properties.mass + q * u - p * v;
 
-phidot = ;
-thetadot = ;
-psidot = ;
+phidot = p + q * s1 * s2 / c2 + r * c1 * s2 / c2;
+thetadot = p * c1 - r * s1;
+psidot = q * s1 / c2 + r * c1 / c2;
 
-pdot = ;
-qdot = ;
-rdot = ;
+pdot = k1 * p * q - k2 * q * r + k3 * L_sum + k4 * N_sum;
+qdot = k5 * p * r - k6 * (p^2 - r^2) + M_sum / properties.I_y;
+rdot = k7 * p * q - k1 * q * r + k4 * L_sum + k8 * N_sum;
 
 % map derivatives
 block.Derivatives.Data(1) = pndot;
