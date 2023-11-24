@@ -377,8 +377,9 @@ angular_velocity = delta_t * properties.prop_max_rpm * 2 * pi / 60;
 advance_ratio = pi * Va / angular_velocity / properties.prop_radius;
 C_T_J = binary_search(J, CT, advance_ratio);
 C_Q_J = binary_search(J, CQ, advance_ratio);
-T_prop = C_T_J * advance_ratio;
-Q_prop = C_Q_J * advance_ratio;
+rho_D = rho * properties.prop_diameter^4 / 4 / pi^2 * angular_velocity^2;
+T_prop = C_T_J * rho_D;
+Q_prop = C_Q_J * rho_D * properties.prop_diameter;
 
 % gravity
 % compute the gravitational forces here
@@ -403,7 +404,7 @@ vdot = Y_sum / properties.mass + p * w - r * u;
 wdot = Z_sum / properties.mass + q * u - p * v;
 
 phidot = p + q * s1 * s2 / c2 + r * c1 * s2 / c2;
-thetadot = p * c1 - r * s1;
+thetadot = q * c1 - r * s1;
 psidot = q * s1 / c2 + r * c1 / c2;
 
 pdot = k1 * p * q - k2 * q * r + k3 * L_sum + k4 * N_sum;
