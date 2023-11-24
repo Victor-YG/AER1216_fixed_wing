@@ -7,7 +7,7 @@ function value = binary_search(keys, values, query)
     j = length(keys);
 
     while(j - i > 1)
-        k = (i + j) / 2;
+        k = floor((i + j) / 2);
         if (keys(k) < query)
             i = k;
         elseif (keys(k) > query)
