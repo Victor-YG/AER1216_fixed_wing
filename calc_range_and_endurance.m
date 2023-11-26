@@ -13,13 +13,15 @@ C_D_0 = properties.C_D_0
 AR = b / c
 K = 1 / pi / e / AR
 
-C_L_Pmin = sqrt(C_D_0 / K)
-
 W1 = 9.1 * 9.81
 W0 = W1 + 4 * 9.81
 rho = 1.1116
-SFC = 0.6651 / 1000 / 3600
+eta = 0.8 % propeller efficiency
+SFC = 0.6651 * 9.81 / 1000 / 3600
 
-E = sqrt(rho * S) / sqrt(8) / SFC * power(C_L_Pmin, 1.5) / C_D_0 * (1 / sqrt(W1) - 1 / sqrt(W0)) / 3600 % in hour
+C_L_C_D_max = 1 / 2 / sqrt(K * C_D_0)
+C_L_3_2_C_D_max = 1 / 4 / C_D_0 * power(3 * C_D_0 / K, 0.75)
 
-R = 1 / SFC / 2 / sqrt(K * C_D_0) * log(W0 / W1) / 1000
+E = eta / SFC * sqrt(2 * rho * S) * C_L_3_2_C_D_max * (1 / sqrt(W1) - 1 / sqrt(W0)) / 3600 % in hour
+
+R = eta / SFC * C_L_C_D_max * log(W0 / W1) / 1000 % in km
