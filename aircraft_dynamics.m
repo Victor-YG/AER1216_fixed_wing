@@ -262,17 +262,6 @@ load("aer1216_2023F_proj_prop_data.mat")
 % Rename parameters
 P = block.DialogPrm(1).Data; % must duplicate this line in each function
 
-% compute inertial constants
-K  = properties.I_x * properties.I_z - properties.I_xz^2;
-k1 = properties.I_xz * (properties.I_x - properties.I_y + properties.I_z) / K;
-k2 = (properties.I_z * (properties.I_z - properties.I_y) + properties.I_xz^2) / K;
-k3 = properties.I_z / K;
-k4 = properties.I_xz / K;
-k5 = (properties.I_z - properties.I_x) / properties.I_y;
-k6 = properties.I_xz / properties.I_y;
-k7 = ((properties.I_x - properties.I_y) * properties.I_x + properties.I_xz^2) / K;
-k8 = properties.I_x / K;
-
 % map states and inputs
 pn    = block.ContStates.Data(1);
 pe    = block.ContStates.Data(2);
