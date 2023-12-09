@@ -82,11 +82,11 @@ block.SetPreCompInpPortInfoToDynamic;
 block.SetPreCompOutPortInfoToDynamic;
 
 % Override input port properties
-for i = 1:block.NumInputPorts
-    block.InputPort(i).Dimensions        = 4;
-    block.InputPort(i).DatatypeID  = 0;  % double
-    block.InputPort(i).Complexity  = 'Real';
-    block.InputPort(i).DirectFeedthrough = false; % important to be false
+for i = 1:block.NumOutputPorts
+    block.InputPort(1).Dimensions        = 7;
+    block.InputPort(1).DatatypeID  = 0;  % double
+    block.InputPort(1).Complexity  = 'Real';
+    block.InputPort(1).DirectFeedthrough = false; % important to be false
 end
 
 % Override output port properties
@@ -274,15 +274,15 @@ psi   = block.ContStates.Data(9);  % 3 - heading (yaw)
 p     = block.ContStates.Data(10);
 q     = block.ContStates.Data(11);
 r     = block.ContStates.Data(12);
+
 delta_e = block.InputPort(1).Data(1)*pi/180 ; % converted inputs to radians
 delta_a = block.InputPort(1).Data(2)*pi/180 ; % converted inputs to radians
 delta_r = block.InputPort(1).Data(3)*pi/180 ; % converted inputs to radians
 delta_t = block.InputPort(1).Data(4);         % assume between 0 and 1
 
-% Air Data
-Va = sqrt(u^2 + v^2 + w^2);
-alpha = atan2(w, u);
-beta = atan2(v, sqrt(u^2 + w^2));
+u_w = block.InputPort(1).Data(5); % wind speed
+v_w = block.InputPort(1).Data(6);
+w_w = block.InputPort(1).Data(7);
 
 % rotation matrix
 s1 = sin(phi);
@@ -302,6 +302,18 @@ R(2, 3) = c1 * s2 * s3 - s1 * c3;
 R(3, 1) = -s2;
 R(3, 2) = s1 * c2;
 R(3, 3) = c1 * c2;
+
+wind_velocity_g = [u_w; v_w; w_w];
+wind_velocity_b = R * wind_velocity_g;
+
+% Air Data
+u_a = u - wind_velocity_b(1, 1);
+v_a = u - wind_velocity_b(2, 1);
+w_a = u - wind_velocity_b(3, 1);
+Vg = sqrt(u^2 + v^2 + w^2);
+Va = sqrt(u_a^2 + v_a^2 + w_a^2);
+alpha = atan2(w_r, u_r);
+beta = atan2(v, sqrt(u_r^2 + v_r^2 + w_r^2));
 
 % Aerodynamic Coefficients
 % compute the nondimensional aerodynamic coefficients here

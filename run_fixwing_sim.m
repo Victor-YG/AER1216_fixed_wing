@@ -107,5 +107,3 @@ subplot(4, 3, 12)
 plot(t, r)
 legend("r")
 grid on
-
-
