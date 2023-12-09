@@ -378,8 +378,8 @@ F_G = P.g * properties.mass;
 X_sum = T_prop - F_G * s2 - F_D * cos(alpha) + F_L * sin(alpha);
 Y_sum = F_G * s1 * c2 - F_Y;
 Z_sum = F_G * c1 * c2 + F_D * sin(alpha) - F_L * cos(alpha);
-L_sum = L;
-M_sum = M - Q_prop; % assuming properller turning counterclockwise
+L_sum = L - Q_prop; % assuming properller turning counterclockwise
+M_sum = M;
 N_sum = N;
 
 % state derivatives
