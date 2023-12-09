@@ -29,8 +29,8 @@
 % Initial Conditions
 clear all
 % compute trim conditions            
-P.Va0 = 15;         % initial airspeed (also used as trim airspeed)
-P.Va_trim = 15; 
+P.Va0 = 19.44;         % initial airspeed (also used as trim airspeed)
+P.Va_trim = 19.44; 
 P.Va = P.Va_trim;
 
 P.gravity = 9.81;
