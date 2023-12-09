@@ -56,6 +56,15 @@ k6 = properties.I_xz / properties.I_y;
 k7 = ((properties.I_x - properties.I_y) * properties.I_x + properties.I_xz^2) / K;
 k8 = properties.I_x / K;
 
+% thrust and torque coefficients
+C_T_0 =  0.22428565;
+C_T_1 =  0.00045093;
+C_T_2 = -0.39322189;
+C_Q_0 = -5.10377903e-11;
+C_Q_1 = 4.46363445e-02;
+C_Q_2 = -3.56311394e-09;
+C_Q_3 = -7.81249967e-02;
+
 % other parameters
 properties.wing_span      = 2.8956;  % m
 properties.chord_length   = 0.18994; % m

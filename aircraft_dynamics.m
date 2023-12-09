@@ -1,7 +1,7 @@
 function aircraft_dynamics(block)
 %MSFUNTMPL_BASIC A Template for a Level-2 MATLAB S-Function
 %   The MATLAB S-function is written as a MATLAB function with the
-%   same name as the S-function. Replace 'msfuntmpl_basic' with the 
+%   same name as the S-function. Replace 'msfuntmpl_basic' with the
 %   name of your S-function.
 %
 %   It should be noted that the MATLAB S-function is very similar
@@ -11,16 +11,16 @@ function aircraft_dynamics(block)
 %
 %   Copyright 2003-2010 The MathWorks, Inc.
 
-% AER1216 Fall 2023 
+% AER1216 Fall 2023
 % Fixed Wing Project Code
 %
 % aircraft_dynamics.m
 %
 % Fixed wing simulation model file, based on the Aerosonde UAV, with code
-% structure adapted from Small Unmanned Aircraft: Theory and Practice by 
-% R.W. Beard and T. W. McLain. 
-% 
-% Inputs: 
+% structure adapted from Small Unmanned Aircraft: Theory and Practice by
+% R.W. Beard and T. W. McLain.
+%
+% Inputs:
 % delta_e           elevator deflection [deg]
 % delta_a           aileron deflection [deg]
 % delta_r           rudder deflection [deg]
@@ -45,9 +45,9 @@ function aircraft_dynamics(block)
 %% TA NOTE
 % The main code segements you must modify are located in the derivatives
 % function in this .m file. In addition, for Q7, you may need to modify the
-% setup function in order to input wind into the dynamics. 
-% 
-% Modify other sections at your own risk. 
+% setup function in order to input wind into the dynamics.
+%
+% Modify other sections at your own risk.
 
 
 %
@@ -57,7 +57,7 @@ function aircraft_dynamics(block)
 %
 setup(block);
 
-end 
+end
 
 
 %% Function: setup ===================================================
@@ -86,7 +86,7 @@ for i = 1:block.NumInputPorts
     block.InputPort(i).Dimensions        = 4;
     block.InputPort(i).DatatypeID  = 0;  % double
     block.InputPort(i).Complexity  = 'Real';
-    block.InputPort(i).DirectFeedthrough = false; % important to be false 
+    block.InputPort(i).DirectFeedthrough = false; % important to be false
 end
 
 % Override output port properties
@@ -141,7 +141,7 @@ block.RegBlockMethod('Outputs',                 @Outputs); % Required
 block.RegBlockMethod('Derivatives',             @Derivatives); % Required for continuous states
 block.RegBlockMethod('Terminate',               @Terminate); % Required
 
-end 
+end
 
 
 %% PostPropagationSetup:
@@ -152,7 +152,7 @@ end
 %
 function DoPostPropSetup(block)
 block.NumDworks = 1;
-  
+
   block.Dwork(1).Name            = 'x1';
   block.Dwork(1).Dimensions      = 1;
   block.Dwork(1).DatatypeID      = 0;      % double
@@ -163,8 +163,8 @@ end
 
 
 %% InitializeConditions:
-%   Functionality    : Called at the start of simulation and if it is 
-%                      present in an enabled subsystem configured to reset 
+%   Functionality    : Called at the start of simulation and if it is
+%                      present in an enabled subsystem configured to reset
 %                      states, it will be called when the enabled subsystem
 %                      restarts execution to reset the states.
 %   Required         : No
@@ -176,7 +176,7 @@ function InitializeConditions(block)
 P = block.DialogPrm(1).Data; % must duplicate this line in each function
 
 % Initialize continuous states
-block.ContStates.Data(1) = P.pn0; 
+block.ContStates.Data(1) = P.pn0;
 block.ContStates.Data(2) = P.pe0;
 block.ContStates.Data(3) = P.pd0;
 block.ContStates.Data(4) = P.u0;
@@ -189,11 +189,11 @@ block.ContStates.Data(10) = P.p0;
 block.ContStates.Data(11) = P.q0;
 block.ContStates.Data(12) = P.r0;
 
-end 
+end
 
 %% Start:
 %   Functionality    : Called once at start of model execution. If you
-%                      have states that should be initialized once, this 
+%                      have states that should be initialized once, this
 %                      is the place to do it.
 %   Required         : No
 %   C-MEX counterpart: mdlStart
@@ -202,14 +202,14 @@ function Start(block)
 
 block.Dwork(1).Data = 0;
 
-end 
+end
 
 %% Input Port Sampling Method:
 function SetInpPortFrameData(block, idx, fd)
-  
+
   block.InputPort(idx).SamplingMode = 'Sample';
   for i = 1:block.NumOutputPorts
-    block.OutputPort(i).SamplingMode  = 'Sample';   
+    block.OutputPort(i).SamplingMode  = 'Sample';
   end
 end
 
@@ -232,7 +232,7 @@ block.OutputPort(1).Data = temp_mat; % states
 %     block.OutputPort(1).Data(i) = block.ContStates.Data(i);
 % end
 
-end 
+end
 
 
 %% Update:
@@ -245,7 +245,7 @@ function Update(block)
 
 block.Dwork(1).Data = block.InputPort(1).Data;
 
-end 
+end
 
 
 %% Derivatives:
@@ -257,7 +257,6 @@ end
 function Derivatives(block)
 
 load("parameters.mat")
-load("aer1216_2023F_proj_prop_data.mat")
 
 % Rename parameters
 P = block.DialogPrm(1).Data; % must duplicate this line in each function
@@ -304,7 +303,7 @@ R(3, 1) = -s2;
 R(3, 2) = s1 * c2;
 R(3, 3) = c1 * c2;
 
-% Aerodynamic Coefficients 
+% Aerodynamic Coefficients
 % compute the nondimensional aerodynamic coefficients here
 scale_x = properties.chord_length / 2 / Va;
 scale_y = properties.wing_span / 2 / Va;
@@ -350,22 +349,23 @@ C_n = C_n + properties.C_n_dr * delta_r;
 rho = P.air_density; % TODO::replace with the air density at current altitude
 dynamic_pressure = 0.5 * rho * Va^2;
 dynamic_force = dynamic_pressure * properties.wing_area;
-dynamic_moment = dynamic_force * properties.wing_span;
 
 F_L = C_L * dynamic_force;
 F_D = C_D * dynamic_force;
 F_Y = C_Y * dynamic_force;
-M   = C_m * dynamic_moment;
-L   = C_l * dynamic_moment;
-N   = C_n * dynamic_moment;
+L   = C_l * dynamic_force * properties.wing_span;
+M   = C_m * dynamic_force * properties.chord_length;
+N   = C_n * dynamic_force * properties.wing_span;
 
 % propulsion forces and moments
 % compute the propulsion forces and moments here
-angular_velocity = delta_t * properties.prop_max_rpm * 2 * pi / 60;
+angular_velocity = delta_t * properties.prop_max_rpm * 2 * pi / 60 + 1; % add 1 to avoid divide by 0
 
 advance_ratio = pi * Va / angular_velocity / properties.prop_radius;
-C_T_J = binary_search(J, CT, advance_ratio);
-C_Q_J = binary_search(J, CQ, advance_ratio);
+
+C_T_J = C_T_0 + C_T_1 * advance_ratio + C_T_2 * advance_ratio^2;
+C_Q_J = C_Q_0 + C_Q_1 * advance_ratio + C_Q_2 * advance_ratio^2 + C_Q_3 * advance_ratio^3;
+
 rho_D = rho * properties.prop_diameter^4 / 4 / pi^2 * angular_velocity^2;
 T_prop = C_T_J * rho_D;
 Q_prop = C_Q_J * rho_D * properties.prop_diameter;
@@ -378,8 +378,8 @@ F_G = P.g * properties.mass;
 X_sum = T_prop - F_G * s2 - F_D * cos(alpha) + F_L * sin(alpha);
 Y_sum = F_G * s1 * c2 - F_Y;
 Z_sum = F_G * c1 * c2 + F_D * sin(alpha) - F_L * cos(alpha);
-M_sum = M - Q_prop; % assuming properller turning counterclockwise
 L_sum = L;
+M_sum = M - Q_prop; % assuming properller turning counterclockwise
 N_sum = N;
 
 % state derivatives
@@ -414,7 +414,7 @@ block.Derivatives.Data(10)= pdot;
 block.Derivatives.Data(11)= qdot;
 block.Derivatives.Data(12)= rdot;
 
-end 
+end
 
 
 %% Terminate:
@@ -424,5 +424,5 @@ end
 %
 function Terminate(block)
 
-end 
+end
 
