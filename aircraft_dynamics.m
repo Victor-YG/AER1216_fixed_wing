@@ -308,12 +308,12 @@ wind_velocity_b = R * wind_velocity_g;
 
 % Air Data
 u_a = u - wind_velocity_b(1, 1);
-v_a = u - wind_velocity_b(2, 1);
-w_a = u - wind_velocity_b(3, 1);
+v_a = v - wind_velocity_b(2, 1);
+w_a = w - wind_velocity_b(3, 1);
 Vg = sqrt(u^2 + v^2 + w^2);
 Va = sqrt(u_a^2 + v_a^2 + w_a^2);
-alpha = atan2(w_r, u_r);
-beta = atan2(v, sqrt(u_r^2 + v_r^2 + w_r^2));
+alpha = atan2(w_a, u_a);
+beta = atan2(v_a, sqrt(u_a^2 + v_a^2 + w_a^2));
 
 % Aerodynamic Coefficients
 % compute the nondimensional aerodynamic coefficients here
