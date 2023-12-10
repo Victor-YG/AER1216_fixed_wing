@@ -48,6 +48,11 @@ legend("dt")
 grid on
 
 figure
+x0=10;
+y0=10;
+width=1050;
+height=1000;
+set(gcf,'position',[x0,y0,width,height])
 subplot(4, 3, 1)
 plot(t, x)
 legend("x")
