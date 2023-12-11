@@ -106,9 +106,53 @@ grid on
 subplot(4, 3, 11)
 plot(t, q)
 legend("q")
-grid on
+grid on 
 
 subplot(4, 3, 12)
 plot(t, r)
 legend("r")
 grid on
+
+% 3D Position Plot as Time Changes
+figure;
+subplot(2, 1, 1)
+plot3(x, y, h, 'o-', 'LineWidth', 2);
+title('3D Position Plot as Time Changes');
+xlabel('x Position');
+ylabel('y Position');
+zlabel('h Position');
+grid on;
+
+% Adding a time axis
+hold on;
+scatter3(x, y, h, 100, t, 'filled');
+colorbar; % Show colorbar representing time
+
+% Adding a label to the colorbar
+cb = colorbar;
+ylabel(cb, 'Time');
+
+subplot(2, 1, 2)
+plot3(x, y, h, 'o-', 'LineWidth', 2);
+title('3D Position Plot as Time Changes');
+xlabel('x Position');
+ylabel('y Position');
+zlabel('h Position');
+grid on;
+
+% Adding a time axis
+hold on;
+scatter3(x, y, h, 100, t, 'filled');
+colorbar; % Show colorbar representing time
+
+% Adding a label to the colorbar
+cb = colorbar;
+ylabel(cb, 'Time');
+
+% Set the view to a top-down perspective
+view(0, 90); % Azimuthal angle = 0, Elevation angle = 90
+
+% Set the axes to have the same scale
+axis equal;
+
+hold off;
