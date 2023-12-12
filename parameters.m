@@ -39,11 +39,11 @@ P.air_density = 1.225;
 
 % Aerosonde UAV Data
 % physical parameters of airframe
-properties.mass           = 9.1;     % kg
-properties.I_x            = 0.8244;  % kg*m^2
-properties.I_y            = 1.135;   % kg*m^2
-properties.I_z            = 1.759;   % kg*m^2
-properties.I_xz           = 0.1204;  % kg*m^2
+properties.mass           = 9.1 + 4.0; % kg
+properties.I_x            = 0.8244;    % kg*m^2
+properties.I_y            = 1.135;     % kg*m^2
+properties.I_z            = 1.759;     % kg*m^2
+properties.I_xz           = 0.1204;    % kg*m^2
 
 % compute inertial constants
 K  = properties.I_x * properties.I_z - properties.I_xz^2;
