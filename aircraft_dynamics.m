@@ -397,7 +397,7 @@ N_sum = N;
 % state derivatives
 % the full aircraft dynamics model is computed here
 pndot = u * c2 * c3 + v * (s1 * s2 * c3 - c1 * s3) + w * (c1 * s2 * c3 + s1 * s3);
-pedot = u * c2 * s3 + v * (s1 * s2 * s3 - c1 * c3) + w * (c1 * s2 * s3 - s1 * c3);
+pedot = u * c2 * s3 + v * (s1 * s2 * s3 + c1 * c3) + w * (c1 * s2 * s3 - s1 * c3);
 pddot = u * (-s2) + v * s1 * c2 + w * c1 * c2;
 
 udot = X_sum / properties.mass + r * v - q * w;
