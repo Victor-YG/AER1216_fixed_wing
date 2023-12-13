@@ -7,6 +7,7 @@ clear all
 sim("Fixed_Wing_Aircraft_Sim_closed_loop.slx")
 t = x_sim.Time;
 
+% states data
 x = x_sim.Data(:, 1);
 y = x_sim.Data(:, 2);
 z = x_sim.Data(:, 3);
@@ -21,11 +22,13 @@ p = x_sim.Data(:, 10);
 q = x_sim.Data(:, 11);
 r = x_sim.Data(:, 12);
 
+% control data
 de = u_sim.Data(:, 1);
 da = u_sim.Data(:, 2);
 dr = u_sim.Data(:, 3);
 dt = u_sim.Data(:, 4);
 
+% control plots
 figure
 subplot(4, 1, 1)
 plot(t, de)
@@ -47,6 +50,7 @@ plot(t, dt)
 legend("dt")
 grid on
 
+% state plots
 figure
 x0=10;
 y0=10;
@@ -112,6 +116,27 @@ subplot(4, 3, 12)
 plot(t, r)
 legend("r")
 grid on
+
+% angle of attack, yaw rate, and climb rate
+alpha = pitch.Data(:, 1);
+chi_dot = course_angle_rate.Data(:, 1);
+h_dot = climb_rate.Data(:, 1);
+
+figure;
+subplot(3, 1, 1);
+plot(t, alpha);
+legend("pitch");
+grid on;
+
+subplot(3, 1, 2);
+plot(t, chi_dot);
+legend("course angle rate");
+grid on;
+
+subplot(3, 1, 3);
+plot(t, h_dot);
+legend("climb rate");
+grid on;
 
 % 3D Position Plot as Time Changes
 figure;
