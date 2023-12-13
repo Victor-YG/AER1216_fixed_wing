@@ -304,7 +304,7 @@ R(3, 2) = s1 * c2;
 R(3, 3) = c1 * c2;
 
 wind_velocity_g = [u_w; v_w; w_w];
-wind_velocity_b = R * wind_velocity_g;
+wind_velocity_b = transpose(R) * wind_velocity_g;
 
 % Air Data
 u_a = u - wind_velocity_b(1, 1);
